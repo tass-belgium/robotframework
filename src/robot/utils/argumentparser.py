@@ -145,20 +145,14 @@ class ArgumentParser(object):
         """
         args = self._get_env_options() + list(args)
         args = [system_decode(a) for a in args]
-        print("*WARN* GOTTEN FOLLOWING ARGUMENTS {}".format(args))
         if self._auto_argumentfile:
             args = self._process_possible_argfile(args)
-        print("*WARN* GOTTEN AFTER AUTO ARGUMENT FILE")
         opts, args = self._parse_args(args)
-        print("*WARN* AFTER OPTS AND ARGS")
         if self._auto_argumentfile and opts.get('argumentfile'):
             raise DataError("Using '--argumentfile' option in shortened format "
                             "like '--argumentf' is not supported.")
-        print("*WARN* AFTER SELF AUTO ARGUMENTFILE")
         opts, args = self._handle_special_options(opts, args)
-        print("*WARN* AFTER SPECIAL OPTIOJNS")
         self._arg_limit_validator(args)
-        print("*WARN* AFTER LIMIT VALIDATOR")
         if self._validator:
             opts, args = self._validator(opts, args)
         return opts, args
@@ -190,10 +184,8 @@ class ArgumentParser(object):
 
     def _parse_args(self, args):
         args = [self._lowercase_long_option(a) for a in args]
-        print("*WARN* AFTER LIST COMPRE SHORT OPTS {}, LONG OPTS {}".format(self._short_opts, self._long_opts))
         try:
             opts, args = getopt.getopt(args, self._short_opts, self._long_opts)
-            print("*WARN* AFTER GETOPT!")
         except getopt.GetoptError as err:
             raise DataError(err.msg)
         return self._process_opts(opts), self._glob_args(args)
@@ -314,7 +306,6 @@ class ArgumentParser(object):
                 long_opt = long_opt[2:]
             self._long_opts.append('no' + long_opt)
             self._flag_opts.append(long_opt)
-            print("*WARN* THE FLAG OPTS ARE {}".format(self._flag_opts))
         self._long_opts.append(long_opt)
         self._short_opts += (''.join(short_opts))
 
