@@ -39,8 +39,8 @@ class ExecutionContexts(object):
     def namespaces(self):
         return (context.namespace for context in self)
 
-    def start_suite(self, suite, namespace, output, dry_run=False):
-        ctx = _ExecutionContext(suite, namespace, output, dry_run)
+    def start_suite(self, suite, namespace, output, dry_run=False, no_error=False):
+        ctx = _ExecutionContext(suite, namespace, output, dry_run, no_error)
         self._contexts.append(ctx)
         return ctx
 
@@ -55,7 +55,7 @@ EXECUTION_CONTEXTS = ExecutionContexts()
 class _ExecutionContext(object):
     _started_keywords_threshold = 42  # Jython on Windows don't work with higher
 
-    def __init__(self, suite, namespace, output, dry_run=False):
+    def __init__(self, suite, namespace, output, dry_run=False, no_error=False):
         self.suite = suite
         self.test = None
         self.timeouts = set()
@@ -67,6 +67,7 @@ class _ExecutionContext(object):
         self.in_keyword_teardown = 0
         self._started_keywords = 0
         self.timeout_occurred = False
+        self.no_error = no_error
 
     @contextmanager
     def suite_teardown(self):

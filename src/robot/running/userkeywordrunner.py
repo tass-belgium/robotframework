@@ -71,6 +71,7 @@ class UserKeywordRunner(object):
     def _run(self, context, args, result):
         variables = context.variables
         args = self._resolve_arguments(args, variables)
+        print("*WARN* _RUN FUNCTION NOW!!!")
         with context.user_keyword:
             self._set_arguments(args, context)
             timeout = self._get_timeout(variables)
@@ -138,7 +139,11 @@ class UserKeywordRunner(object):
         if not (handler.keywords or handler.return_value):
             raise DataError("User keyword '%s' contains no keywords." % self.name)
         if context.dry_run and 'robot:no-dry-run' in handler.tags:
+            print("*WARN* >>>>>>>>>>>>>> __execute! w/ FOUND DRY RUN!!")
             return None, None
+        if context.no_error or 'robot:no_error' in handler.tags:
+            print("*WARN* >>>>>>>>>>>>>> Found the robot:no-error tag!")
+            context.no_error = True
         error = return_ = pass_ = None
         try:
             StepRunner(context).run_steps(handler.keywords)

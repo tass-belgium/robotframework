@@ -130,8 +130,10 @@ class ExecutionFailed(RobotError):
         for child in getattr(self, '_errors', []):
             child.continue_on_failure = continue_on_failure
 
-    def can_continue(self, teardown=False, templated=False, dry_run=False):
+    def can_continue(self, teardown=False, templated=False, dry_run=False, no_error=False):
         if dry_run:
+            return True
+        if no_error:
             return True
         if self.syntax or self.exit or self.test_timeout:
             return False

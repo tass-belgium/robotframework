@@ -23,8 +23,10 @@ class ArgumentValidator(object):
     def __init__(self, argspec):
         self._argspec = argspec
 
-    def validate(self, positional, named, dryrun=False):
+    def validate(self, positional, named, dryrun=False, no_error=False):
         if dryrun and any(is_list_var(arg) for arg in positional):
+            return
+        if no_error and any(is_list_var(arg) for arg in positional):
             return
         named = set(name for name, value in named)
         self._validate_no_multiple_values(positional, named, self._argspec)

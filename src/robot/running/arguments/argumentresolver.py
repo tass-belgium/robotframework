@@ -31,6 +31,7 @@ class ArgumentResolver(object):
         self._argument_validator = ArgumentValidator(argspec)
 
     def resolve(self, arguments, variables=None):
+        print("*WARN* IN RESOLVE IN ARGUMENTRESOLVER AND VARIABLES IS {}".format(variables))
         positional, named = self._named_resolver.resolve(arguments, variables)
         positional, named = self._variable_replacer.replace(positional, named,
                                                             variables)

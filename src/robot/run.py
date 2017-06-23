@@ -291,6 +291,7 @@ Options
                           is not an error that no test matches the condition.
     --dryrun              Verifies test data and runs tests so that library
                           keywords are not executed.
+    --error            Do not fail instantly when when keywords fail, but whatevs.
  -X --exitonfailure       Stops test execution if any critical test fails.
                           Short option -X is new in RF 3.0.1.
     --exitonerror         Stops test execution if any error occurs when parsing

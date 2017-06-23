@@ -377,6 +377,7 @@ class RobotSettings(_BaseSettings):
                        'Output'             : ('output', 'output.xml'),
                        'LogLevel'           : ('loglevel', 'INFO'),
                        'DryRun'             : ('dryrun', False),
+                       'NoError'            : ('error', False),
                        'ExitOnFailure'      : ('exitonfailure', False),
                        'ExitOnError'        : ('exitonerror', False),
                        'SkipTeardownOnExit' : ('skipteardownonexit', False),
@@ -454,6 +455,9 @@ class RobotSettings(_BaseSettings):
     @property
     def dry_run(self):
         return self['DryRun']
+    @property
+    def no_error(self):
+        return self['NoError']
     @property
     def exit_on_failure(self):
         return self['ExitOnFailure']
