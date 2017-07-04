@@ -41,7 +41,7 @@ class StepRunner(object):
                 errors.extend(exception.get_errors())
                 if not exception.can_continue(self._context.in_teardown,
                                               self._templated,
-                                              self._context.dry_run, self._context.no_error):
+                                              self._context.dry_run, self._context.continue_on_failure):
                     break
 
         if errors:

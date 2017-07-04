@@ -139,8 +139,6 @@ class UserKeywordRunner(object):
             raise DataError("User keyword '%s' contains no keywords." % self.name)
         if context.dry_run and 'robot:no-dry-run' in handler.tags:
             return None, None
-        if context.no_error or 'robot:no_error' in handler.tags:
-            context.no_error = True
         error = return_ = pass_ = None
         try:
             StepRunner(context).run_steps(handler.keywords)

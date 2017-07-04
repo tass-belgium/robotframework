@@ -67,7 +67,7 @@ class Runner(SuiteVisitor):
         ns.start_suite()
         ns.variables.set_from_variable_table(suite.resource.variables)
         EXECUTION_CONTEXTS.start_suite(result, ns, self._output,
-                                       self._settings.dry_run, self._settings.no_error)
+                                       self._settings.dry_run, self._settings.continue_on_failure)
         self._context.set_suite_variables(result)
         if not self._suite_status.failures:
             ns.handle_imports()
@@ -113,6 +113,8 @@ class Runner(SuiteVisitor):
             self._output.warn("Multiple test cases with name '%s' executed in "
                               "test suite '%s'." % (test.name, self._suite.longname))
         self._executed_tests[test.name] = True
+        if self._context.continue_on_failure or 'robot:continue_on_failure' in test.tags:
+            self._context.continue_on_failure = True
         result = self._suite.tests.create(name=test.name,
                                           doc=self._resolve_setting(test.doc),
                                           tags=self._resolve_setting(test.tags),
